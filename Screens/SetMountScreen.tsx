@@ -1,23 +1,43 @@
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
-import React from "react";
+import React, { useState } from "react";
 import { GlobalStyles } from "../Styles/GlobalStyles";
+import RNScreenKeyboard from "rnscreenkeyboard";
+import { Ionicons } from "@expo/vector-icons";
 
 const SetMountScreen = () => {
+  const [value, setValue] = useState<string>("");
+
   return (
     <View style={styles.container}>
-
       {/* mount container */}
       <View style={styles.mountContainer}>
-        <Text style={styles.mountStyle}>56,00 €</Text>
+        <Text style={styles.mountStyle}>{value} €</Text>
       </View>
 
       {/* Keyboard container */}
       <View style={styles.keyboardContainer}>
-        <Text>Teclado</Text>
+        <RNScreenKeyboard
+          textStyle={{
+            color: GlobalStyles.defaultText.color,
+            fontWeight: "500",
+            fontSize: 30,
+          }}
+          BackSpaceComponent={
+            <Ionicons name="backspace-outline" size={35} color="black" />
+          }
+          backspaceTint={GlobalStyles.defaultText.color}
+          cellStyle={{
+            marginVertical: 5,
+            marginHorizontal: 45,
+          }}
+          lastRowStyle={{ marginBottom: 30 }}
+          value={value}
+          onKeyPress={(val: string) => setValue(val)}
+        />
       </View>
 
       {/* Buttons container */}
-      <View style={{margin: 25}}>
+      <View style={{ margin: 25 }}>
         <TouchableOpacity
           style={{
             backgroundColor: "#035AC5",
@@ -25,7 +45,7 @@ const SetMountScreen = () => {
             paddingVertical: 15,
             marginHorizontal: 10,
             borderRadius: 6,
-            marginBottom: 10
+            marginBottom: 10,
           }}
         >
           <Text style={{ color: "white", fontWeight: "600" }}>Solicitar</Text>
@@ -54,7 +74,7 @@ const SetMountScreen = () => {
 export default SetMountScreen;
 
 const styles = StyleSheet.create({
-  container: { flex: 1 },
+  container: { flex: 3, backgroundColo: "white" },
   mountContainer: { flex: 1, justifyContent: "center", alignItems: "center" },
   keyboardContainer: {
     flex: 1,

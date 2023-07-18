@@ -8,6 +8,7 @@ import ShareOptionsScreen from "../Screens/ShareOptionsScreen";
 import PaymentSuccessScreen from "../Screens/PaymentSuccessScreen";
 import PaymentRequestScreen from "../Screens/PaymentRequestScreen";
 import QRScreen from "../Screens/QRScreen";
+import { GlobalStyles } from "../Styles/GlobalStyles";
 
 export default function StackNavigator() {
   const Stack = createNativeStackNavigator();
@@ -20,13 +21,16 @@ export default function StackNavigator() {
           component={SetMountScreen}
           options={{
             headerTitleAlign: "center",
-            headerTitleStyle:{fontWeight: '700'},
+            headerTitleStyle: {
+              fontWeight: "600",
+              color: GlobalStyles.defaultText.color,
+            },
             title: "Solicitar Pago",
             headerRight: () => (
               <CurrencyButton onPress={() => alert("This is a button!")} />
             ),
             headerLeft: () => (
-              <CustomBackButton onPress={() => alert("This is a button!")} />
+              <CustomBackButton onPress={() => alert("Back button!")} />
             ),
           }}
         />

@@ -14,14 +14,14 @@ const QRScreen = () => {
       style={{
         backgroundColor: GlobalStyles.defaultText.color,
         flex: 1,
-        alignItems: "center",
+        
       }}
     >
       <View
         style={{
           alignItems: "center",
-          marginHorizontal: 10,
-          marginVertical: 25,
+          marginHorizontal: 11,
+          marginTop: 10,
         }}
       >
         {/* redict info msg */}
@@ -30,7 +30,8 @@ const QRScreen = () => {
             flexDirection: "row",
             backgroundColor: "#EAF3FF",
             borderRadius: 5,
-            padding: 10,
+            paddingVertical: 20,
+            paddingHorizontal: 25,
             marginBottom: 20,
           }}
         >

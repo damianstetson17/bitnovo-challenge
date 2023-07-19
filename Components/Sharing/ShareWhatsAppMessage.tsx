@@ -29,7 +29,10 @@ const ShareWhatsAppMessage = () => {
   return (
     <>
       {isFocused ? (
-        <TouchableOpacity onPressOut={() => setIsFocused(false)} style={{}}>
+        <TouchableOpacity
+          onPressOut={() => setIsFocused(false)}
+          style={styles.btnContainer}
+        >
           <Image
             source={require("../../assets/icons/wpp-icon.png")}
             style={styles.iconStyle}
@@ -53,7 +56,7 @@ const ShareWhatsAppMessage = () => {
           image={
             <Image
               source={require("../../assets/icons/wpp-icon.png")}
-              style={styles.iconStyle}
+              style={[styles.iconStyle, {marginLeft: 0, marginRight: 5}]}
             />
           }
           title="Envíar a número de Whatsapp"
@@ -77,7 +80,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     marginVertical: 10,
   },
-  iconStyle: { width: 20, height: 20, marginLeft: 10 },
+  iconStyle: { width: 20, height: 20, marginLeft: 10},
   phoneInput: {
     paddingLeft: 16,
     width: "70%",

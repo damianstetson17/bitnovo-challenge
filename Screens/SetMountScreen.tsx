@@ -1,62 +1,127 @@
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { GlobalStyles } from "../Styles/GlobalStyles";
 import RNScreenKeyboard from "rnscreenkeyboard";
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation, NavigationProp } from "@react-navigation/native";
 import CustomButton from "../Components/Buttons/CustomButton";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { AntDesign } from "@expo/vector-icons";
+import {
+  BottomSheetModal,
+  BottomSheetModalProvider,
+} from "@gorhom/bottom-sheet";
+import CurrencyList from "../Components/Lists/CurrencyList";
 
 const SetMountScreen = () => {
   const navigation = useNavigation<NavigationProp<any>>();
   const [montValue, setMontValue] = useState<number>(0);
 
+  //modal
+  const [isOpen, setIsOpen] = useState(false);
+  const bottomSheetModalRef = useRef<any>(null);
+  const snapPoints = ["48%"];
+
+  const handlePresentModal = () => {
+    bottomSheetModalRef.current?.present();
+    setIsOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    bottomSheetModalRef.current?.close();
+  };
+
   return (
-    <View style={styles.container}>
-      {/* mount container */}
-      <View style={styles.mountContainer}>
-        <Text style={styles.mountStyle}>{montValue} €</Text>
-      </View>
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <BottomSheetModalProvider>
+        <View style={[styles.container, {backgroundColor: isOpen ? 'gray' : 'white'}]}>
+          {/* mount container */}
+          <View style={styles.mountContainer}>
+            <Text style={styles.mountStyle}>{montValue} €</Text>
+          </View>
 
-      {/* Keyboard container */}
-      <View style={styles.keyboardContainer}>
-        <RNScreenKeyboard
-          textStyle={{
-            color: GlobalStyles.defaultText.color,
-            fontWeight: "500",
-            fontSize: 30,
-          }}
-          BackSpaceComponent={
-            <Ionicons name="backspace-outline" size={35} color="black" />
-          }
-          backspaceTint={GlobalStyles.defaultText.color}
-          cellStyle={{
-            marginVertical: 5,
-            marginHorizontal: 45,
-          }}
-          lastRowStyle={{ marginBottom: 30 }}
-          value={Number(montValue)}
-          onKeyPress={(inputValue: string) => {
-            setMontValue(Number(inputValue));
-          }}
-        />
-      </View>
+          {/* Keyboard container */}
+          <View style={styles.keyboardContainer}>
+            <RNScreenKeyboard
+              textStyle={{
+                color: GlobalStyles.defaultText.color,
+                fontWeight: "500",
+                fontSize: 30,
+              }}
+              BackSpaceComponent={
+                <Ionicons name="backspace-outline" size={35} color="black" />
+              }
+              backspaceTint={GlobalStyles.defaultText.color}
+              cellStyle={{
+                marginVertical: 5,
+                marginHorizontal: 45,
+              }}
+              lastRowStyle={{ marginBottom: 30 }}
+              value={Number(montValue)}
+              onKeyPress={(inputValue: string) => {
+                setMontValue(Number(inputValue));
+              }}
+            />
+          </View>
 
-      {/* Buttons container */}
-      <View style={styles.btnsContainer}>
-        <CustomButton
-          title="Solicitar"
-          onPress={() => navigation.navigate("PaymentRequestScreen", {})}
-        />
-        <CustomButton
-          title="Restablecer"
-          onPress={() => setMontValue(0)}
-          style={styles.redStyleBtn}
-          titleStyle={{
-            color: "#B91C1C",
-          }}
-        />
-      </View>
-    </View>
+          {/* Buttons container */}
+          <View style={styles.btnsContainer}>
+            <CustomButton
+              title="Solicitar"
+              onPress={() => navigation.navigate("PaymentRequestScreen", {})}
+            />
+            <CustomButton
+              title="Restablecer"
+              onPress={() => handlePresentModal()}
+              style={styles.redStyleBtn}
+              titleStyle={{
+                color: "#B91C1C",
+              }}
+            />
+          </View>
+        </View>
+
+        {/* modal */}
+        <BottomSheetModal
+          ref={bottomSheetModalRef}
+          index={0}
+          snapPoints={snapPoints}
+          backgroundStyle={{ borderRadius: 50 }}
+          onDismiss={() => setIsOpen(false)}
+        >
+          <TouchableOpacity
+            onPress={handleCloseModal}
+            style={{
+              borderRadius: 50,
+              backgroundColor: "#60617029",
+              alignSelf: "flex-end",
+              marginRight: 30,
+              marginBottom: 10
+            }}
+          >
+            <AntDesign
+              name="close"
+              size={20}
+              color={GlobalStyles.defaultText.color}
+              style={{ margin: 10 }}
+            />
+          </TouchableOpacity>
+          <Text
+            style={{
+              fontWeight: "600",
+              color: GlobalStyles.defaultText.color,
+              fontSize: 22,
+              textAlign: "center",
+            }}
+          >
+            Elige una moneda
+          </Text>
+
+          {/* currency list */}
+          <CurrencyList/>
+        </BottomSheetModal>
+      </BottomSheetModalProvider>
+    </GestureHandlerRootView>
   );
 };
 

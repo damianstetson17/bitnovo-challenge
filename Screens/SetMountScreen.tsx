@@ -3,15 +3,18 @@ import React, { useState } from "react";
 import { GlobalStyles } from "../Styles/GlobalStyles";
 import RNScreenKeyboard from "rnscreenkeyboard";
 import { Ionicons } from "@expo/vector-icons";
+import { useNavigation, NavigationProp } from "@react-navigation/native";
+import CustomButton from "../Components/Buttons/CustomButton";
 
 const SetMountScreen = () => {
-  const [value, setValue] = useState<string>("");
+  const navigation = useNavigation<NavigationProp<any>>();
+  const [montValue, setMontValue] = useState<number>(0);
 
   return (
     <View style={styles.container}>
       {/* mount container */}
       <View style={styles.mountContainer}>
-        <Text style={styles.mountStyle}>{value} €</Text>
+        <Text style={styles.mountStyle}>{montValue} €</Text>
       </View>
 
       {/* Keyboard container */}
@@ -31,41 +34,27 @@ const SetMountScreen = () => {
             marginHorizontal: 45,
           }}
           lastRowStyle={{ marginBottom: 30 }}
-          value={value}
-          onKeyPress={(val: string) => setValue(val)}
+          value={Number(montValue)}
+          onKeyPress={(inputValue: string) => {
+            setMontValue(Number(inputValue));
+          }}
         />
       </View>
 
       {/* Buttons container */}
-      <View style={{ margin: 25 }}>
-        <TouchableOpacity
-          style={{
-            backgroundColor: "#035AC5",
-            alignItems: "center",
-            paddingVertical: 15,
-            marginHorizontal: 10,
-            borderRadius: 6,
-            marginBottom: 10,
+      <View style={styles.btnsContainer}>
+        <CustomButton
+          title="Solicitar"
+          onPress={() => navigation.navigate("PaymentRequestScreen", {})}
+        />
+        <CustomButton
+          title="Restablecer"
+          onPress={() => setMontValue(0)}
+          style={styles.redStyleBtn}
+          titleStyle={{
+            color: "#B91C1C",
           }}
-        >
-          <Text style={{ color: "white", fontWeight: "600" }}>Solicitar</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          style={{
-            backgroundColor: "#white",
-            alignItems: "center",
-            paddingVertical: 15,
-            marginHorizontal: 10,
-            borderColor: "#B91C1C",
-            borderWidth: 1,
-            borderRadius: 6,
-          }}
-        >
-          <Text style={{ color: "#B91C1C", fontWeight: "600" }}>
-            Restablecer
-          </Text>
-        </TouchableOpacity>
+        />
       </View>
     </View>
   );
@@ -85,5 +74,15 @@ const styles = StyleSheet.create({
     color: GlobalStyles.defaultText.color,
     fontWeight: "700",
     fontSize: 40,
+  },
+  btnsContainer: {
+    paddingHorizontal: 20,
+    marginBottom: 20,
+  },
+  redStyleBtn: {
+    backgroundColor: "white",
+    borderColor: "#B91C1C",
+    borderWidth: 1,
+    marginTop: 10,
   },
 });

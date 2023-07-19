@@ -1,9 +1,10 @@
 import React from "react";
+import { Image } from "react-native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { NavigationContainer } from "@react-navigation/native";
 import SetMountScreen from "../Screens/SetMountScreen";
-import CurrencyButton from "../Components/CurrencyButton";
-import CustomBackButton from "../Components/CustomBackButton";
+import CurrencyButton from "../Components/Buttons/CurrencyButton";
+import CustomBackButton from "../Components/Buttons/CustomBackButton";
 import ShareOptionsScreen from "../Screens/ShareOptionsScreen";
 import PaymentSuccessScreen from "../Screens/PaymentSuccessScreen";
 import PaymentRequestScreen from "../Screens/PaymentRequestScreen";
@@ -29,9 +30,7 @@ export default function StackNavigator() {
             headerRight: () => (
               <CurrencyButton onPress={() => alert("This is a button!")} />
             ),
-            headerLeft: () => (
-              <CustomBackButton onPress={() => alert("Back button!")} />
-            ),
+            headerLeft: () => <CustomBackButton />,
           }}
         />
 
@@ -54,10 +53,15 @@ export default function StackNavigator() {
           name="QRScreen"
           component={QRScreen}
           options={{
-            headerTitleAlign: "center",
-            headerLeft: () => (
-              <CustomBackButton onPress={() => alert("This is a button!")} />
+            headerTitle: () => (
+              <Image
+                style={{ width: 100, height: 35 }}
+                source={require("../assets/images/bitnovo-pay.png")}
+              />
             ),
+            headerTitleAlign: "center",
+            headerBackVisible: false,
+            headerLeft: () => <CustomBackButton />,
           }}
         />
       </Stack.Navigator>

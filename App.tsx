@@ -1,13 +1,13 @@
-import { StatusBar } from 'expo-status-bar';
+import { StatusBar } from "expo-status-bar";
 
-import { StyleSheet, View } from 'react-native';
-import StackNavigator from './Navigation/StackNavigator';
+import { StyleSheet, View } from "react-native";
+import StackNavigator from "./Navigation/StackNavigator";
 
 export default function App() {
   return (
     <View style={styles.container}>
-      <StackNavigator/>
-      <StatusBar style="auto" />
+      <StackNavigator />
+      <StatusBar style="light" />
     </View>
   );
 }

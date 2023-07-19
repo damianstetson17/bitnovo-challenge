@@ -2,14 +2,18 @@ import { StyleSheet, Text, TouchableOpacity } from "react-native";
 import React from "react";
 import { MaterialIcons } from "@expo/vector-icons";
 import { GlobalStyles } from "../../Styles/GlobalStyles";
+import { useAppDispatch } from "../../store/store";
+import { setBottonSheetOpen } from "../../store/slices/currencySlice";
 
-type Props = {
-  onPress(): void;
-};
+const CurrencyButton = () => {
+  const dispatch = useAppDispatch();
 
-const CurrencyButton = ({ onPress }: Props) => {
+  const setSelectedFiat = () => {
+    dispatch(setBottonSheetOpen(true));
+  };
+
   return (
-    <TouchableOpacity onPress={onPress} style={styles.containerStyle}>
+    <TouchableOpacity onPress={setSelectedFiat} style={styles.containerStyle}>
       <Text style={[GlobalStyles.defaultText, styles.textStyle]}>EUR</Text>
       <MaterialIcons
         name="keyboard-arrow-down"

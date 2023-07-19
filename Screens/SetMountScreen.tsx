@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { GlobalStyles } from "../Styles/GlobalStyles";
 import RNScreenKeyboard from "rnscreenkeyboard";
 import { Ionicons } from "@expo/vector-icons";
@@ -12,32 +12,51 @@ import {
   BottomSheetModalProvider,
 } from "@gorhom/bottom-sheet";
 import CurrencyList from "../Components/Lists/CurrencyList";
+import { useAppDispatch, useAppSelector } from "../store/store";
+import { setBottonSheetOpen, setMount } from "../store/slices/currencySlice";
 
 const SetMountScreen = () => {
-  const navigation = useNavigation<NavigationProp<any>>();
-  const [montValue, setMontValue] = useState<number>(0);
+  const mount = useAppSelector((state) => state.currency.currencyMount);
+  const symbol = useAppSelector((state) => state.currency.currencySymbol);
 
-  //modal
-  const [isOpen, setIsOpen] = useState(false);
-  const bottomSheetModalRef = useRef<any>(null);
+  const dispatch = useAppDispatch();
+
+  const navigation = useNavigation<NavigationProp<any>>();
+  const [montValue, setMontValue] = useState<number>(mount);
+
+  //bottom sheet
+  const isBottomSheetOpen = useAppSelector(
+    (state) => state.currency.isBottomSheetOpen
+  );
+  const bottomSheetModalRef = useRef<any>();
   const snapPoints = ["48%"];
 
-  const handlePresentModal = () => {
-    bottomSheetModalRef.current?.present();
-    setIsOpen(true);
-  };
+  useEffect(() => {
+    if (isBottomSheetOpen) bottomSheetModalRef?.current?.present();
+    else bottomSheetModalRef?.current?.close();
+  }, [isBottomSheetOpen]);
 
   const handleCloseModal = () => {
-    bottomSheetModalRef.current?.close();
+    dispatch(setBottonSheetOpen(false));
+  };
+
+  const handlePostPay = () => {
+    dispatch(setMount(montValue));
+    navigation.navigate("PaymentRequestScreen", {});
   };
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <BottomSheetModalProvider>
-        <View style={[styles.container, {backgroundColor: isOpen ? 'gray' : 'white'}]}>
+        <View
+          style={[
+            styles.container,
+            { backgroundColor: isBottomSheetOpen ? "gray" : "white" },
+          ]}
+        >
           {/* mount container */}
           <View style={styles.mountContainer}>
-            <Text style={styles.mountStyle}>{montValue} €</Text>
+            <Text style={styles.mountStyle}>{montValue} {symbol}</Text>
           </View>
 
           {/* Keyboard container */}
@@ -66,13 +85,10 @@ const SetMountScreen = () => {
 
           {/* Buttons container */}
           <View style={styles.btnsContainer}>
-            <CustomButton
-              title="Solicitar"
-              onPress={() => navigation.navigate("PaymentRequestScreen", {})}
-            />
+            <CustomButton title="Solicitar" onPress={() => handlePostPay()} />
             <CustomButton
               title="Restablecer"
-              onPress={() => handlePresentModal()}
+              onPress={() => setMontValue(0)}
               style={styles.redStyleBtn}
               titleStyle={{
                 color: "#B91C1C",
@@ -87,7 +103,7 @@ const SetMountScreen = () => {
           index={0}
           snapPoints={snapPoints}
           backgroundStyle={{ borderRadius: 50 }}
-          onDismiss={() => setIsOpen(false)}
+          onDismiss={handleCloseModal}
         >
           <TouchableOpacity
             onPress={handleCloseModal}
@@ -96,7 +112,7 @@ const SetMountScreen = () => {
               backgroundColor: "#60617029",
               alignSelf: "flex-end",
               marginRight: 30,
-              marginBottom: 10
+              marginBottom: 10,
             }}
           >
             <AntDesign
@@ -118,7 +134,8 @@ const SetMountScreen = () => {
           </Text>
 
           {/* currency list */}
-          <CurrencyList/>
+          <CurrencyList />
+          
         </BottomSheetModal>
       </BottomSheetModalProvider>
     </GestureHandlerRootView>

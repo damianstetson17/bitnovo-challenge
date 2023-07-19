@@ -10,6 +10,8 @@ import PaymentSuccessScreen from "../Screens/PaymentSuccessScreen";
 import PaymentRequestScreen from "../Screens/PaymentRequestScreen";
 import QRScreen from "../Screens/QRScreen";
 import { GlobalStyles } from "../Styles/GlobalStyles";
+import { useAppDispatch } from "../store/store";
+import { setBottonSheetOpen } from "../store/slices/currencySlice";
 
 export default function StackNavigator() {
   const Stack = createNativeStackNavigator();
@@ -27,9 +29,7 @@ export default function StackNavigator() {
               color: GlobalStyles.defaultText.color,
             },
             title: "Solicitar Pago",
-            headerRight: () => (
-              <CurrencyButton onPress={() => alert("This is a button!")} />
-            ),
+            headerRight: () => <CurrencyButton />,
             headerLeft: () => <CustomBackButton />,
           }}
         />

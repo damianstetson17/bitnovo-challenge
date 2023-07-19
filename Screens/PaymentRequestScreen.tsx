@@ -13,9 +13,13 @@ import ShareButton from "../Components/Sharing/ShareButton";
 import * as Clipboard from "expo-clipboard";
 import CustomButton from "../Components/Buttons/CustomButton";
 import { useNavigation, NavigationProp } from "@react-navigation/native";
+import { useAppSelector } from "../store/store";
 
 const PaymentRequestScreen = () => {
   const navigation = useNavigation<NavigationProp<any>>();
+
+  const mount = useAppSelector((state) => state.currency.currencyMount);
+  const symbol = useAppSelector((state) => state.currency.currencySymbol);
 
   const copyLinkToClipboard = async () => {
     await Clipboard.setStringAsync("https://bitnovo-public.front.com");
@@ -39,8 +43,9 @@ const PaymentRequestScreen = () => {
           Solicitud de pago
         </Text>
 
+        {/* mount preview */}
         <Text style={[GlobalStyles.defaultText, styles.mountTxtStyle]}>
-          152.256 €
+          {mount} {symbol}
         </Text>
         <Text
           style={{

@@ -2,28 +2,31 @@ import { StyleSheet, Text, View, FlatList } from "react-native";
 import React from "react";
 import CurrencyTypeItem from "./CurrencyTypeItem";
 import ListSeparator from "./ListSeparator";
-
-// ! harcoded data
-const data = [
-  { id: 1, flag: "🇪🇺", abb: "EUR", name: "Euro" },
-  { id: 2, flag: "🇬🇧", abb: "GBP", name: "Libra Esterlina" },
-  { id: 3, flag: "🇺🇸", abb: "US", name: "Dolar Estadounidense" },
-];
-
-const setSelectedCurrency = (currencyAbb: string) => {
-  console.log(currencyAbb);
-};
+import { useAppDispatch, useAppSelector } from "../../store/store";
+import { setFiatData } from "../../store/slices/currencySlice";
 
 const CurrencyList = () => {
+  const dispatch = useAppDispatch();
+
+  //fetching the fiats list from redux state
+  const currencyDataList = useAppSelector(
+    (state) => state.currency.currencyList
+  );
+
+  //setting the select fiat to te redux state
+  const setSelectedCurrency = (abb: string, symbol: string) => {
+    dispatch(setFiatData({ abb, symbol }));
+  };
+
   return (
     <FlatList
-      data={data}
+      data={currencyDataList}
       renderItem={({ item }) => (
         <CurrencyTypeItem
           flag={item.flag}
           abbreviation={item.abb}
           name={item.name}
-          onPress={() => setSelectedCurrency(item.abb)}
+          onPress={() => setSelectedCurrency(item.abb, item.symbol)}
         />
       )}
       keyExtractor={(item) => item?.id?.toString()}

@@ -20,15 +20,17 @@ export interface ResponseData {
 /**
  * Make Post for order creation (service)
  */
-export const ordersCreate = async ( postData?: PostData ): Promise<AxiosResponse<ResponseData>> => {
+export const ordersCreate = async (
+  postData?: PostData
+): Promise<AxiosResponse<ResponseData>> => {
   const token = "7fb3fa18-6761-4bf0-a3a8-1b9e0247a0df";
-  const uri: string = "https://payments.smsdata.com/api/v1/orders/orders_create";
+  const uri: string =
+    "https://payments.smsdata.com/api/v1/orders/orders_create";
   const headers = {
     "X-Device-Id": token,
   };
 
   try {
-    debugger
     const response = await axios.post<ResponseData>(uri, postData, {
       headers,
     });

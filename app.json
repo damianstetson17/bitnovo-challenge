@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "bitnovo-app",
-    "slug": "bitnovo-app",
+    "slug": "bitnovo-challenge",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -25,6 +25,12 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "5d6dc89e-1869-42cc-935c-168a2b8361a5"
+      }
+    },
+    "owner": "damianstetson17"
   }
 }

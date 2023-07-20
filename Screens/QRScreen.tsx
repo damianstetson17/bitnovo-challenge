@@ -3,18 +3,23 @@ import React from "react";
 import { GlobalStyles } from "../Styles/GlobalStyles";
 import { Ionicons } from "@expo/vector-icons";
 import PrintButton from "../Components/Buttons/PrintButton";
+import QRCode from "react-native-qrcode-svg";
+import { useAppSelector } from "../store/store";
+import { formatNumberWithCommas } from "../Components/utils/formatNumberWithCommas";
 
 const QRScreen = () => {
+  const mount = useAppSelector((state) => state.currency.currencyMount);
+  const symbol = useAppSelector((state) => state.currency.currencySymbol);
+
   const handlePrint = () => {
     ToastAndroid.show("Imprimir PDF", ToastAndroid.SHORT);
-  }
+  };
 
   return (
     <View
       style={{
         backgroundColor: GlobalStyles.defaultText.color,
         flex: 1,
-        
       }}
     >
       <View
@@ -41,7 +46,7 @@ const QRScreen = () => {
               color: GlobalStyles.defaultText.color,
               fontSize: 15,
               fontWeight: "500",
-              marginLeft: 10
+              marginLeft: 10,
             }}
           >
             Muestra este QR y será redirigido a la pasarela de pago.
@@ -51,12 +56,26 @@ const QRScreen = () => {
         {/* QR */}
         <View
           style={{
-            height: 400,
-            width: 390,
+            paddingHorizontal:50,
+            paddingVertical:20,
             backgroundColor: "white",
             borderRadius: 5,
+            justifyContent: "center",
+            alignItems: "center",
           }}
-        ></View>
+        >
+          <QRCode
+            value="Just some string value"
+            size={300}
+            logo={require("../assets/images/bitcoin.png")}
+            logoSize={80}
+            logoMargin={0}
+            color={GlobalStyles.defaultText.color}
+          />
+          <Text style={styles.mountStyle}>
+            {formatNumberWithCommas(mount)} {symbol}
+          </Text>
+        </View>
 
         {/* text and print button */}
         <View>
@@ -70,9 +89,9 @@ const QRScreen = () => {
           >
             Esta pantalla se actualizará automáticamente.
           </Text>
-          
-          <View style={{marginHorizontal: 80}}>
-            <PrintButton onPress={handlePrint}/>
+
+          <View style={{ marginHorizontal: 80 }}>
+            <PrintButton onPress={handlePrint} />
           </View>
         </View>
       </View>
@@ -82,4 +101,11 @@ const QRScreen = () => {
 
 export default QRScreen;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  mountStyle: {
+    color: GlobalStyles.defaultText.color,
+    fontSize: 35,
+    fontWeight: "600",
+    marginVertical: 15,
+  },
+});

@@ -14,6 +14,7 @@ import * as Clipboard from "expo-clipboard";
 import CustomButton from "../Components/Buttons/CustomButton";
 import { useNavigation, NavigationProp } from "@react-navigation/native";
 import { useAppSelector } from "../store/store";
+import { formatNumberWithCommas } from "../Components/utils/formatNumberWithCommas";
 
 const PaymentRequestScreen = () => {
   const navigation = useNavigation<NavigationProp<any>>();
@@ -45,7 +46,7 @@ const PaymentRequestScreen = () => {
 
         {/* mount preview */}
         <Text style={[GlobalStyles.defaultText, styles.mountTxtStyle]}>
-          {mount} {symbol}
+          {formatNumberWithCommas(mount)} {symbol}
         </Text>
         <Text
           style={{

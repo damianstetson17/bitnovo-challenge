@@ -14,6 +14,7 @@ import {
 import CurrencyList from "../Components/Lists/CurrencyList";
 import { useAppDispatch, useAppSelector } from "../store/store";
 import { setBottonSheetOpen, setMount } from "../store/slices/currencySlice";
+import { formatNumberWithCommas } from "../Components/utils/formatNumberWithCommas";
 
 const SetMountScreen = () => {
   const mount = useAppSelector((state) => state.currency.currencyMount);
@@ -56,7 +57,9 @@ const SetMountScreen = () => {
         >
           {/* mount container */}
           <View style={styles.mountContainer}>
-            <Text style={styles.mountStyle}>{montValue} {symbol}</Text>
+            <Text style={styles.mountStyle}>
+              {formatNumberWithCommas(montValue)} {symbol}
+            </Text>
           </View>
 
           {/* Keyboard container */}
@@ -135,7 +138,6 @@ const SetMountScreen = () => {
 
           {/* currency list */}
           <CurrencyList />
-          
         </BottomSheetModal>
       </BottomSheetModalProvider>
     </GestureHandlerRootView>

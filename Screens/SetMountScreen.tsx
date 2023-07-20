@@ -19,7 +19,6 @@ import { formatNumberWithCommas } from "../Components/utils/formatNumberWithComm
 const SetMountScreen = () => {
   const mount = useAppSelector((state) => state.currency.currencyMount);
   const symbol = useAppSelector((state) => state.currency.currencySymbol);
-
   const dispatch = useAppDispatch();
 
   const navigation = useNavigation<NavigationProp<any>>();

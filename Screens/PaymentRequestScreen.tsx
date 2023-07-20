@@ -61,7 +61,7 @@ const PaymentRequestScreen = () => {
         </Text>
 
         {/* rows container */}
-        <View style={{ marginHorizontal: 30, marginTop: 10 }}>
+        <View style={styles.rowsContainer}>
           {/*qr row */}
           <View style={styles.QRContainer}>
             <ShareButton
@@ -185,4 +185,5 @@ const styles = StyleSheet.create({
     marginTop: 30,
     marginBottom: 30,
   },
+  rowsContainer: { marginHorizontal: 30, marginTop: 10 },
 });

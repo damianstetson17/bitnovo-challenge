@@ -16,7 +16,7 @@ export default function StackNavigator() {
 
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="PaymentSuccessScreen">
+      <Stack.Navigator initialRouteName="SetMountScreen">
         {/* first page with calculator and header buttons*/}
         <Stack.Screen
           name="SetMountScreen"

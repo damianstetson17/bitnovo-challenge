@@ -12,11 +12,22 @@ import ShareButton from "../Components/Sharing/ShareButton";
 import * as Clipboard from "expo-clipboard";
 import ShareWhatsAppMessage from "../Components/Sharing/ShareWhatsAppMessage";
 import ShareEmail from "../Components/Sharing/ShareEmail";
+import { useAppSelector } from "../store/store";
 
 const ShareOptionsScreen = () => {
+  const webUrl = useAppSelector((state) => state.currency.webUrl);
+
   const copyLinkToClipboard = async () => {
-    await Clipboard.setStringAsync("https://bitnovo-public.front.com");
-    ToastAndroid.show("Link copiado en portapapeles", ToastAndroid.SHORT);
+    if (webUrl.length > 0) {
+      await Clipboard.setStringAsync(webUrl);
+      ToastAndroid.show("Link copiado en portapapeles", ToastAndroid.SHORT);
+    } else {
+      await Clipboard.setStringAsync("https://bitnovo-public.front.com");
+      ToastAndroid.show(
+        "Ejemplo de Link copiado en portapapeles",
+        ToastAndroid.SHORT
+      );
+    }
   };
 
   return (
@@ -49,7 +60,9 @@ const ShareOptionsScreen = () => {
               }}
             />
           }
-          title="https://bitnovo-public.front..."
+          title={
+            webUrl.length > 0 ? webUrl : "Generando link, por favor esperar..."
+          }
           onPress={copyLinkToClipboard}
         />
 

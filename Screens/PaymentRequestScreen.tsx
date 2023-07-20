@@ -7,25 +7,70 @@ import {
   ToastAndroid,
   TouchableOpacity,
 } from "react-native";
-import React from "react";
+import React, { useEffect } from "react";
 import { GlobalStyles } from "../styles/GlobalStyles";
 import ShareButton from "../Components/Sharing/ShareButton";
 import * as Clipboard from "expo-clipboard";
 import CustomButton from "../Components/Buttons/CustomButton";
 import { useNavigation, NavigationProp } from "@react-navigation/native";
-import { useAppSelector } from "../store/store";
+import { useAppDispatch, useAppSelector } from "../store/store";
 import { formatNumberWithCommas } from "../Components/utils/formatNumberWithCommas";
+import { setWebUrl } from "../store/slices/currencySlice";
 
 const PaymentRequestScreen = () => {
   const navigation = useNavigation<NavigationProp<any>>();
 
   const mount = useAppSelector((state) => state.currency.currencyMount);
   const symbol = useAppSelector((state) => state.currency.currencySymbol);
+  const webUrl = useAppSelector((state) => state.currency.webUrl);
 
   const copyLinkToClipboard = async () => {
-    await Clipboard.setStringAsync("https://bitnovo-public.front.com");
-    ToastAndroid.show("Link copiado en portapapeles", ToastAndroid.SHORT);
+    if (webUrl.length > 0) {
+      await Clipboard.setStringAsync(webUrl);
+      ToastAndroid.show("Link copiado en portapapeles", ToastAndroid.SHORT);
+    } else {
+      await Clipboard.setStringAsync("https://bitnovo-public.front.com");
+      ToastAndroid.show(
+        "Ejemplo de Link copiado en portapapeles",
+        ToastAndroid.SHORT
+      );
+    }
   };
+
+  //web socket connection
+  const data = useAppSelector((state) => state.currency.data);
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    //if post create_orders return data values for socket connection
+    if (data) {
+      const url = "wss://payments.smsdata.com/ws/merchant/" + data?.identifier;
+      const socket = new WebSocket(url);
+
+      //webSocket listeners
+      socket.onopen = () => {
+        console.log("Conexión establecida.");
+      };
+
+      socket.onmessage = (event) => {
+        const data = event.data;
+        console.log("Mensaje recibido:", data);
+
+        //if is data is not null try set the web_url value
+        if (data) {
+          dispatch(setWebUrl(data?.web_url));
+        }
+      };
+
+      socket.onerror = (error) => {
+        console.error("Error en la conexión:", error);
+      };
+
+      socket.onclose = (event) => {
+        console.log("Conexión cerrada:", event.reason);
+      };
+    }
+  }, []);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -75,7 +120,11 @@ const PaymentRequestScreen = () => {
                   }}
                 />
               }
-              title="https://bitnovo-public.front..."
+              title={
+                webUrl.length > 0
+                  ? webUrl
+                  : "Generando link, por favor esperar..."
+              }
               onPress={copyLinkToClipboard}
             />
             <TouchableOpacity

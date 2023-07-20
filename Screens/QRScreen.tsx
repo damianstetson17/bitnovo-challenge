@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View, ToastAndroid } from "react-native";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { GlobalStyles } from "../styles/GlobalStyles";
 import { Ionicons } from "@expo/vector-icons";
 import PrintButton from "../Components/Buttons/PrintButton";
@@ -10,6 +10,17 @@ import { formatNumberWithCommas } from "../Components/utils/formatNumberWithComm
 const QRScreen = () => {
   const mount = useAppSelector((state) => state.currency.currencyMount);
   const symbol = useAppSelector((state) => state.currency.currencySymbol);
+
+  //for QR generate link
+  const webUrl = useAppSelector((state) => state.currency.webUrl);
+
+  const [webUrlToShow, setWebUrlToShow] = useState<string>(
+    "https://paytest.bitnovo.com/f16a139c"
+  );
+
+  useEffect(() => {
+    if (webUrl.length > 0) setWebUrlToShow(webUrl);
+  }, [webUrl]);
 
   const handlePrint = () => {
     ToastAndroid.show("Imprimir PDF", ToastAndroid.SHORT);
@@ -29,7 +40,7 @@ const QRScreen = () => {
         {/* QR */}
         <View style={styles.QRContainer}>
           <QRCode
-            value="Just some string value"
+            value={webUrlToShow}
             size={300}
             logo={require("../assets/images/bitcoin.png")}
             logoSize={80}

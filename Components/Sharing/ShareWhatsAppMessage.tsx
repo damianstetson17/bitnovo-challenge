@@ -5,20 +5,30 @@ import {
   ToastAndroid,
   TouchableOpacity,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ShareButton from "./ShareButton";
 import PhoneInput from "react-native-phone-input";
 import CustomButton from "../Buttons/CustomButton";
+import { useAppSelector } from "../../store/store";
 
 const ShareWhatsAppMessage = () => {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [isFocused, setIsFocused] = useState(false);
+  const webUrl = useAppSelector((state) => state.currency.webUrl);
+  const [webUrlToShow, setWebUrlToShow] = useState<string>(
+    "https://paytest.bitnovo.com/f16a139c"
+  );
+
+  useEffect(() => {
+    if (webUrl.length > 0) setWebUrlToShow(webUrl);
+  }, [webUrl]);
 
   const sendToPhoneNumber = () => {
     if (phoneNumber.length > 13)
       Linking.openURL(
         "whatsapp://send?text=" +
-          "El link de pago para tu compra es: https://paytest.bitnovo.com/f16a139c" +
+          "El link de pago para tu compra es: " +
+          webUrlToShow +
           "&phone=" +
           phoneNumber
       );
@@ -56,7 +66,7 @@ const ShareWhatsAppMessage = () => {
           image={
             <Image
               source={require("../../assets/icons/wpp-icon.png")}
-              style={[styles.iconStyle, {marginLeft: 0, marginRight: 5}]}
+              style={[styles.iconStyle, { marginLeft: 0, marginRight: 5 }]}
             />
           }
           title="Envíar a número de Whatsapp"
@@ -80,7 +90,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     marginVertical: 10,
   },
-  iconStyle: { width: 20, height: 20, marginLeft: 10},
+  iconStyle: { width: 20, height: 20, marginLeft: 10 },
   phoneInput: {
     paddingLeft: 16,
     width: "70%",

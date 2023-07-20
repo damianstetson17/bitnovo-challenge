@@ -13,12 +13,19 @@ import {
 } from "@gorhom/bottom-sheet";
 import CurrencyList from "../Components/Lists/CurrencyList";
 import { useAppDispatch, useAppSelector } from "../store/store";
-import { setBottonSheetOpen, setMount } from "../store/slices/currencySlice";
+import {
+  createOrder,
+  setBottonSheetOpen,
+  setMount,
+} from "../store/slices/currencySlice";
 import { formatNumberWithCommas } from "../Components/utils/formatNumberWithCommas";
+import { PostData } from "../services/OrderServices";
 
 const SetMountScreen = () => {
   const mount = useAppSelector((state) => state.currency.currencyMount);
   const symbol = useAppSelector((state) => state.currency.currencySymbol);
+  const fiat = useAppSelector((state) => state.currency.currencyAbb);
+
   const dispatch = useAppDispatch();
 
   const navigation = useNavigation<NavigationProp<any>>();
@@ -41,7 +48,18 @@ const SetMountScreen = () => {
   };
 
   const handlePostPay = () => {
+    //updates mount state
     dispatch(setMount(montValue));
+
+    //generate body object
+    const test: PostData = {
+      expected_output_amount: mount,
+      fiat,
+      notes: "challenge test",
+    };
+
+    //try post action
+    dispatch(createOrder(test));
     navigation.navigate("PaymentRequestScreen", {});
   };
 

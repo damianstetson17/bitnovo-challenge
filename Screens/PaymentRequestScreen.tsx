@@ -60,6 +60,13 @@ const PaymentRequestScreen = () => {
         if (data) {
           dispatch(setWebUrl(data?.web_url));
         }
+
+        /**
+         *
+         * Aquí iría el código de redirección a la ventana PaymentSuccessScreen
+         * una vez data contenga el msg de éxito
+         *
+         */
       };
 
       socket.onerror = (error) => {
@@ -177,9 +184,13 @@ const PaymentRequestScreen = () => {
 
       {/* buttons container */}
       <View style={{ marginHorizontal: 30 }}>
-        <CustomButton title="Ir a la pasarela" />
+        <CustomButton
+          title="Ir a la pasarela"
+          onPress={() => navigation.navigate("PaymentSuccessScreen", {})}
+        />
         <CustomButton
           title="Compartir"
+          onPress={() => navigation.navigate("PaymentSuccessScreen", {})}
           style={styles.shareCustomStyle}
           titleStyle={{ color: "#035AC5" }}
         />

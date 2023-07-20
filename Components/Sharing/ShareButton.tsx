@@ -41,6 +41,6 @@ const styles = StyleSheet.create({
   },
   txtStyle: {
     fontSize: 15,
-    color: GlobalStyles.defaultText.color,
+    color: GlobalStyles.defaultStyle.color,
   },
 });

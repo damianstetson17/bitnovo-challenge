@@ -79,7 +79,7 @@ const styles = StyleSheet.create({
   txtInputStyle: {
     width: "70%",
     textAlign: "left",
-    color: GlobalStyles.defaultText.color,
+    color: GlobalStyles.defaultStyle.color,
   },
   littleStyleButton: {
     paddingVertical: 5,

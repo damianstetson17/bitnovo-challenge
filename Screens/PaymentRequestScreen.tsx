@@ -45,7 +45,7 @@ const PaymentRequestScreen = () => {
         </Text>
 
         {/* mount preview */}
-        <Text style={[GlobalStyles.defaultText, styles.mountTxtStyle]}>
+        <Text style={[GlobalStyles.defaultStyle, styles.mountTxtStyle]}>
           {formatNumberWithCommas(mount)} {symbol}
         </Text>
         <Text

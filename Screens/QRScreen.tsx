@@ -16,61 +16,25 @@ const QRScreen = () => {
   };
 
   return (
-    <View
-      style={{
-        backgroundColor: GlobalStyles.defaultText.color,
-        flex: 1,
-      }}
-    >
-      <View
-        style={{
-          alignItems: "center",
-          marginHorizontal: 11,
-          marginTop: 10,
-        }}
-      >
+    <View style={styles.containerStyle}>
+      <View style={styles.infoContainer}>
         {/* redict info msg */}
-        <View
-          style={{
-            flexDirection: "row",
-            backgroundColor: "#EAF3FF",
-            borderRadius: 5,
-            paddingVertical: 20,
-            paddingHorizontal: 25,
-            marginBottom: 20,
-          }}
-        >
+        <View style={styles.infoCardStyle}>
           <Ionicons name="alert-circle" size={24} color="#035AC5" />
-          <Text
-            style={{
-              color: GlobalStyles.defaultText.color,
-              fontSize: 15,
-              fontWeight: "500",
-              marginLeft: 10,
-            }}
-          >
+          <Text style={styles.subTitleStyle}>
             Muestra este QR y será redirigido a la pasarela de pago.
           </Text>
         </View>
 
         {/* QR */}
-        <View
-          style={{
-            paddingHorizontal:50,
-            paddingVertical:20,
-            backgroundColor: "white",
-            borderRadius: 5,
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
+        <View style={styles.QRContainer}>
           <QRCode
             value="Just some string value"
             size={300}
             logo={require("../assets/images/bitcoin.png")}
             logoSize={80}
             logoMargin={0}
-            color={GlobalStyles.defaultText.color}
+            color={GlobalStyles.defaultStyle.color}
           />
           <Text style={styles.mountStyle}>
             {formatNumberWithCommas(mount)} {symbol}
@@ -79,14 +43,7 @@ const QRScreen = () => {
 
         {/* text and print button */}
         <View>
-          <Text
-            style={{
-              color: "white",
-              fontSize: 15,
-              fontWeight: "400",
-              marginVertical: 30,
-            }}
-          >
+          <Text style={styles.bottomTxTStyle}>
             Esta pantalla se actualizará automáticamente.
           </Text>
 
@@ -102,10 +59,40 @@ const QRScreen = () => {
 export default QRScreen;
 
 const styles = StyleSheet.create({
+  containerStyle: { backgroundColor: GlobalStyles.defaultStyle.color, flex: 1 },
+  infoContainer: { alignItems: "center", marginHorizontal: 11, marginTop: 10 },
+  infoCardStyle: {
+    flexDirection: "row",
+    backgroundColor: "#EAF3FF",
+    borderRadius: 5,
+    paddingVertical: 20,
+    paddingHorizontal: 25,
+    marginBottom: 20,
+  },
+  subTitleStyle: {
+    color: GlobalStyles.defaultStyle.color,
+    fontSize: 15,
+    fontWeight: "500",
+    marginLeft: 10,
+  },
+  QRContainer: {
+    paddingHorizontal: 25,
+    paddingVertical: 20,
+    backgroundColor: "white",
+    borderRadius: 5,
+    justifyContent: "center",
+    alignItems: "center",
+  },
   mountStyle: {
-    color: GlobalStyles.defaultText.color,
+    color: GlobalStyles.defaultStyle.color,
     fontSize: 35,
     fontWeight: "600",
     marginVertical: 15,
+  },
+  bottomTxTStyle: {
+    color: "white",
+    fontSize: 15,
+    fontWeight: "400",
+    marginVertical: 30,
   },
 });

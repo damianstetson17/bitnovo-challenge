@@ -1,7 +1,7 @@
 import { StyleSheet } from "react-native";
 
 export const GlobalStyles = StyleSheet.create({
-  defaultText: {
+  defaultStyle: {
     color: "#002859",
   },
 });

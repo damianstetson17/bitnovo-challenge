@@ -30,7 +30,7 @@ const styles = StyleSheet.create({
     fontSize: 22,
     marginRight: 10,
     fontWeight: "500",
-    color: GlobalStyles.defaultText.color,
+    color: GlobalStyles.defaultStyle.color,
   },
   nameStyle: {
     fontSize: 20,

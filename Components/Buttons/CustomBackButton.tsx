@@ -15,7 +15,7 @@ const CustomBackButton = () => {
       <Ionicons
         name="arrow-back"
         size={24}
-        color={GlobalStyles.defaultText.color}
+        color={GlobalStyles.defaultStyle.color}
       />
     </TouchableOpacity>
   );

@@ -26,7 +26,7 @@ const ShareOptionsScreen = () => {
           source={require("../assets/icons/send-icon.png")}
           style={styles.sendIconStyle}
         />
-        <Text style={[GlobalStyles.defaultText, styles.titleStyle]}>
+        <Text style={[GlobalStyles.defaultStyle, styles.titleStyle]}>
           Solicitud de pago enviada
         </Text>
         <Text style={styles.infoTxtStyle}>

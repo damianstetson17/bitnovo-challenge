@@ -14,11 +14,11 @@ const CurrencyButton = () => {
 
   return (
     <TouchableOpacity onPress={setSelectedFiat} style={styles.containerStyle}>
-      <Text style={[GlobalStyles.defaultText, styles.textStyle]}>EUR</Text>
+      <Text style={[GlobalStyles.defaultStyle, styles.textStyle]}>EUR</Text>
       <MaterialIcons
         name="keyboard-arrow-down"
         size={25}
-        color={GlobalStyles.defaultText.color}
+        color={GlobalStyles.defaultStyle.color}
         style={{ marginLeft: 5 }}
       />
     </TouchableOpacity>

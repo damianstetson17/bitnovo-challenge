@@ -66,14 +66,14 @@ const SetMountScreen = () => {
           <View style={styles.keyboardContainer}>
             <RNScreenKeyboard
               textStyle={{
-                color: GlobalStyles.defaultText.color,
+                color: GlobalStyles.defaultStyle.color,
                 fontWeight: "500",
                 fontSize: 30,
               }}
               BackSpaceComponent={
                 <Ionicons name="backspace-outline" size={35} color="black" />
               }
-              backspaceTint={GlobalStyles.defaultText.color}
+              backspaceTint={GlobalStyles.defaultStyle.color}
               cellStyle={{
                 marginVertical: 5,
                 marginHorizontal: 45,
@@ -121,14 +121,14 @@ const SetMountScreen = () => {
             <AntDesign
               name="close"
               size={20}
-              color={GlobalStyles.defaultText.color}
+              color={GlobalStyles.defaultStyle.color}
               style={{ margin: 10 }}
             />
           </TouchableOpacity>
           <Text
             style={{
               fontWeight: "600",
-              color: GlobalStyles.defaultText.color,
+              color: GlobalStyles.defaultStyle.color,
               fontSize: 22,
               textAlign: "center",
             }}
@@ -155,7 +155,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   mountStyle: {
-    color: GlobalStyles.defaultText.color,
+    color: GlobalStyles.defaultStyle.color,
     fontWeight: "700",
     fontSize: 40,
   },

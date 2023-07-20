@@ -8,7 +8,7 @@ import {
 import React, { useState } from "react";
 import ShareButton from "./ShareButton";
 import CustomButton from "../Buttons/CustomButton";
-import { GlobalStyles } from "../../Styles/GlobalStyles";
+import { GlobalStyles } from "../../styles/GlobalStyles";
 
 const ShareEmail = () => {
   const [email, setEmail] = useState<string>("");

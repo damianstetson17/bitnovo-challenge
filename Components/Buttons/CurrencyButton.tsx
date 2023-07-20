@@ -1,7 +1,7 @@
 import { StyleSheet, Text, TouchableOpacity } from "react-native";
 import React from "react";
 import { MaterialIcons } from "@expo/vector-icons";
-import { GlobalStyles } from "../../Styles/GlobalStyles";
+import { GlobalStyles } from "../../styles/GlobalStyles";
 import { useAppDispatch } from "../../store/store";
 import { setBottonSheetOpen } from "../../store/slices/currencySlice";
 

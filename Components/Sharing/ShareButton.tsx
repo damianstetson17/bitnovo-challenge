@@ -1,6 +1,6 @@
 import { StyleSheet, Text, TouchableOpacity, Image } from "react-native";
 import React from "react";
-import { GlobalStyles } from "../../Styles/GlobalStyles";
+import { GlobalStyles } from "../../styles/GlobalStyles";
 
 type Props = {
   image: any;

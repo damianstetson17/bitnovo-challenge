@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import React, { useEffect, useRef, useState } from "react";
-import { GlobalStyles } from "../Styles/GlobalStyles";
+import { GlobalStyles } from "../styles/GlobalStyles";
 import RNScreenKeyboard from "rnscreenkeyboard";
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation, NavigationProp } from "@react-navigation/native";

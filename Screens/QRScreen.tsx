@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View, ToastAndroid } from "react-native";
 import React from "react";
-import { GlobalStyles } from "../Styles/GlobalStyles";
+import { GlobalStyles } from "../styles/GlobalStyles";
 import { Ionicons } from "@expo/vector-icons";
 import PrintButton from "../Components/Buttons/PrintButton";
 import QRCode from "react-native-qrcode-svg";

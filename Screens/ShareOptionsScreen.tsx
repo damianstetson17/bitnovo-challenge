@@ -7,7 +7,7 @@ import {
   ToastAndroid,
 } from "react-native";
 import React from "react";
-import { GlobalStyles } from "../Styles/GlobalStyles";
+import { GlobalStyles } from "../styles/GlobalStyles";
 import ShareButton from "../Components/Sharing/ShareButton";
 import * as Clipboard from "expo-clipboard";
 import ShareWhatsAppMessage from "../Components/Sharing/ShareWhatsAppMessage";

@@ -1,6 +1,6 @@
 import { StyleSheet, Text, TouchableOpacity } from "react-native";
 import React from "react";
-import { GlobalStyles } from "../../Styles/GlobalStyles";
+import { GlobalStyles } from "../../styles/GlobalStyles";
 
 type Props = {
   flag?: string;

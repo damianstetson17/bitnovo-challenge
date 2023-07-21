@@ -26,7 +26,7 @@ interface CurrencyState {
 }
 
 const initialState: CurrencyState = {
-  currencyMount: 56,
+  currencyMount: 0,
   currencyAbb: "EUR",
   currencySymbol: "€",
   isBottomSheetOpen: false,

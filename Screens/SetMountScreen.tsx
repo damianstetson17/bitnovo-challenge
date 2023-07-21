@@ -1,4 +1,10 @@
-import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+  ToastAndroid,
+} from "react-native";
 import React, { useEffect, useRef, useState } from "react";
 import { GlobalStyles } from "../styles/GlobalStyles";
 import RNScreenKeyboard from "rnscreenkeyboard";
@@ -48,35 +54,43 @@ const SetMountScreen = () => {
   };
 
   const handlePostPay = () => {
+    if (montValue <= 0) {
+      ToastAndroid.show(
+        "Debe ingresar un valor mayor a cero.",
+        ToastAndroid.LONG
+      );
+      return;
+    }
+
     //updates mount state
     dispatch(setMount(montValue));
 
     //generate body object
     const test: PostData = {
-      "expected_output_amount": montValue,
-      "merchant_urlko": "https://example.com/payment-failed",
-      "merchant_urlok": "https://example.com/payment-successful",
-      "merchant_url_standby": "https://example.com/wait-for-confirmation",
-      "notes": "Example product payment",
-      "reference": "PAY123456789",
-      "fiat": fiat,
-      "language": "ES",
-      "front_dni": "base64_encoded_front_dni_image_data",
-      "back_dni": "base64_encoded_back_dni_image_data",
-      "first_name": "John",
-      "surnames": "Doe",
-      "address_name": "123 Main Street",
-      "address_additional": "Apt 4B",
-      "address_number": "1234",
-      "zip_code": "12345",
-      "city": "Barcelona",
-      "province": "Barcelona",
-      "country": "ES",
-      "email": "john.doe@example.com",
-      "phone_number": "1234567890",
-      "nif": "12345678Z",
-      "referral_id": "REF123456789",
-      "internal_data": "Additional data stored by the merchant"
+      expected_output_amount: montValue,
+      merchant_urlko: "https://example.com/payment-failed",
+      merchant_urlok: "https://example.com/payment-successful",
+      merchant_url_standby: "https://example.com/wait-for-confirmation",
+      notes: "Example product payment",
+      reference: "PAY123456789",
+      fiat: fiat,
+      language: "ES",
+      front_dni: "base64_encoded_front_dni_image_data",
+      back_dni: "base64_encoded_back_dni_image_data",
+      first_name: "John",
+      surnames: "Doe",
+      address_name: "123 Main Street",
+      address_additional: "Apt 4B",
+      address_number: "1234",
+      zip_code: "12345",
+      city: "Barcelona",
+      province: "Barcelona",
+      country: "ES",
+      email: "john.doe@example.com",
+      phone_number: "1234567890",
+      nif: "12345678Z",
+      referral_id: "REF123456789",
+      internal_data: "Additional data stored by the merchant",
     };
 
     //try post action
@@ -126,7 +140,10 @@ const SetMountScreen = () => {
 
           {/* Buttons container */}
           <View style={styles.btnsContainer}>
-            <CustomButton title="Solicitar" onPress={() => handlePostPay()} />
+            <CustomButton
+              title="Solicitar"
+              onPress={() => handlePostPay()}
+            />
             <CustomButton
               title="Restablecer"
               onPress={() => setMontValue(0)}

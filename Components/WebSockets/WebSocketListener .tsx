@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { ToastAndroid } from "react-native";
 import { useAppDispatch, useAppSelector } from "../../store/store";
 import { NavigationProp, useNavigation } from "@react-navigation/native";
 import { resetData, setWebUrl } from "../../store/slices/currencySlice";
@@ -8,6 +9,10 @@ const WebSocketListener = () => {
   const navigation = useNavigation<NavigationProp<any>>();
   const data = useAppSelector((state) => state.currency.data);
   const dispatch = useAppDispatch();
+
+  //status flag from ws
+  const completedPaymentFlag: string = "CO";
+  const cancelledPaymentFlag: string = "CA";
 
   useEffect(() => {
     //if post create_orders return data values for socket connection
@@ -29,9 +34,13 @@ const WebSocketListener = () => {
           dispatch(setWebUrl(data?.web_url));
         }
 
-        //verify status payment for redirect to success
-        if (jsonData?.status === "CA") {
+        //verify status payment for redirect
+        if (jsonData?.status === completedPaymentFlag) {
           navigation.navigate("PaymentSuccessScreen", {});
+        }
+        if (jsonData?.status === cancelledPaymentFlag) {
+          navigation.navigate("SetMountScreen", {});
+          ToastAndroid.show("Se ha cancelado el pago.", ToastAndroid.LONG);
         }
       };
 

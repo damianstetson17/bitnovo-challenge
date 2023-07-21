@@ -183,11 +183,9 @@ const PaymentRequestScreen = () => {
       <View style={{ marginHorizontal: 30 }}>
         <CustomButton
           title="Ir a la pasarela"
-          onPress={() => navigation.navigate("PaymentSuccessScreen", {})}
         />
         <CustomButton
           title="Compartir"
-          onPress={() => navigation.navigate("PaymentSuccessScreen", {})}
           style={styles.shareCustomStyle}
           titleStyle={{ color: "#035AC5" }}
         />

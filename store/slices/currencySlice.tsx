@@ -86,6 +86,10 @@ export const currencySlice = createSlice({
     setBottonSheetOpen: (state, action: PayloadAction<boolean>) => {
       state.isBottomSheetOpen = action.payload;
     },
+    //delete data api
+    resetData: (state) => {
+      state.data = null;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -110,6 +114,11 @@ export const currencySlice = createSlice({
   },
 });
 
-export const { setMount, setBottonSheetOpen, setFiatData, setWebUrl } =
-  currencySlice.actions;
+export const {
+  setMount,
+  setBottonSheetOpen,
+  setFiatData,
+  setWebUrl,
+  resetData,
+} = currencySlice.actions;
 export default currencySlice.reducer;

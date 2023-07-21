@@ -10,6 +10,7 @@ import PaymentSuccessScreen from "../screens/PaymentSuccessScreen";
 import PaymentRequestScreen from "../screens/PaymentRequestScreen";
 import QRScreen from "../screens/QRScreen";
 import { GlobalStyles } from "../styles/GlobalStyles";
+import WebSocketListener from "../Components/WebSockets/WebSocketListener ";
 
 export default function StackNavigator() {
   const Stack = createNativeStackNavigator();
@@ -78,6 +79,9 @@ export default function StackNavigator() {
           }}
         />
       </Stack.Navigator>
+
+      {/* web socket component */}
+      <WebSocketListener />
     </NavigationContainer>
   );
 }

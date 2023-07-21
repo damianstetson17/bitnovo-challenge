@@ -4,17 +4,12 @@ import { GlobalStyles } from "../styles/GlobalStyles";
 import { Ionicons } from "@expo/vector-icons";
 import PrintButton from "../Components/Buttons/PrintButton";
 import QRCode from "react-native-qrcode-svg";
-import { useAppDispatch, useAppSelector } from "../store/store";
+import { useAppSelector } from "../store/store";
 import { formatNumberWithCommas } from "../Components/utils/formatNumberWithCommas";
-import { setWebUrl } from "../store/slices/currencySlice";
-import { useNavigation, NavigationProp } from "@react-navigation/native";
 
 const QRScreen = () => {
   const mount = useAppSelector((state) => state.currency.currencyMount);
   const symbol = useAppSelector((state) => state.currency.currencySymbol);
-  const data = useAppSelector((state) => state.currency.data);
-  const dispatch = useAppDispatch();
-  const navigation = useNavigation<NavigationProp<any>>();
 
   //for QR generate link
   const webUrl = useAppSelector((state) => state.currency.webUrl);
@@ -32,43 +27,6 @@ const QRScreen = () => {
   const handlePrint = () => {
     ToastAndroid.show("Imprimir PDF", ToastAndroid.SHORT);
   };
-
-  //open socket for verify changes
-  useEffect(() => {
-    //if post create_orders return data values for socket connection
-    if (data) {
-      const url = "wss://payments.smsdata.com/ws/merchant/" + data?.identifier;
-      const socket = new WebSocket(url);
-
-      //webSocket listeners
-      socket.onopen = () => {
-        console.log("Conexión establecida.");
-        socket.send("Hola Bitnovo! :)");
-      };
-
-      socket.onmessage = (event) => {
-        const jsonData = JSON.parse(event.data);
-
-        //if is data is not null try set the web_url value
-        if (data?.web_url) {
-          dispatch(setWebUrl(data?.web_url));
-        }
-
-        //verify status payment for redirect to success
-        if (jsonData?.status === "CA") {
-          navigation.navigate("PaymentSuccessScreen", {});
-        }
-      };
-
-      socket.onerror = (error) => {
-        console.error("Error en la conexión:", error);
-      };
-
-      socket.onclose = (event) => {
-        console.log("Conexión cerrada:", event.reason);
-      };
-    }
-  }, []);
 
   return (
     <View style={styles.containerStyle}>

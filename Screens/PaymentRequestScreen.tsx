@@ -7,15 +7,14 @@ import {
   ToastAndroid,
   TouchableOpacity,
 } from "react-native";
-import React, { useEffect } from "react";
+import React from "react";
 import { GlobalStyles } from "../styles/GlobalStyles";
 import ShareButton from "../Components/Sharing/ShareButton";
 import * as Clipboard from "expo-clipboard";
 import CustomButton from "../Components/Buttons/CustomButton";
 import { useNavigation, NavigationProp } from "@react-navigation/native";
-import { useAppDispatch, useAppSelector } from "../store/store";
+import { useAppSelector } from "../store/store";
 import { formatNumberWithCommas } from "../Components/utils/formatNumberWithCommas";
-import { setWebUrl } from "../store/slices/currencySlice";
 
 const PaymentRequestScreen = () => {
   const navigation = useNavigation<NavigationProp<any>>();
@@ -23,8 +22,6 @@ const PaymentRequestScreen = () => {
   const mount = useAppSelector((state) => state.currency.currencyMount);
   const symbol = useAppSelector((state) => state.currency.currencySymbol);
   const webUrl = useAppSelector((state) => state.currency.webUrl);
-  const data = useAppSelector((state) => state.currency.data);
-  const dispatch = useAppDispatch();
 
   const copyLinkToClipboard = async () => {
     if (webUrl.length > 0) {
@@ -38,43 +35,6 @@ const PaymentRequestScreen = () => {
       );
     }
   };
-
-  //web socket connection
-  useEffect(() => {
-    //if post create_orders return data values for socket connection
-    if (data) {
-      const url = "wss://payments.smsdata.com/ws/merchant/" + data?.identifier;
-      const socket = new WebSocket(url);
-
-      //webSocket listeners
-      socket.onopen = () => {
-        console.log("Conexión establecida.");
-      };
-
-      socket.onmessage = (event) => {
-        const jsonData = JSON.parse(event.data);
-        console.log("Mensaje recibido:", data);
-
-        //if is data is not null try set the web_url value
-        if (data?.web_url) {
-          dispatch(setWebUrl(data?.web_url));
-        }
-
-        //verify status payment for redirect to success
-        if (jsonData?.status === "CA") {
-          navigation.navigate("PaymentSuccessScreen", {});
-        }
-      };
-
-      socket.onerror = (error) => {
-        console.error("Error en la conexión:", error);
-      };
-
-      socket.onclose = (event) => {
-        console.log("Conexión cerrada:", event.reason);
-      };
-    }
-  }, [data]);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -181,9 +141,7 @@ const PaymentRequestScreen = () => {
 
       {/* buttons container */}
       <View style={{ marginHorizontal: 30 }}>
-        <CustomButton
-          title="Ir a la pasarela"
-        />
+        <CustomButton title="Ir a la pasarela" />
         <CustomButton
           title="Compartir"
           style={styles.shareCustomStyle}

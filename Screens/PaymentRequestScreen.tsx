@@ -23,6 +23,8 @@ const PaymentRequestScreen = () => {
   const mount = useAppSelector((state) => state.currency.currencyMount);
   const symbol = useAppSelector((state) => state.currency.currencySymbol);
   const webUrl = useAppSelector((state) => state.currency.webUrl);
+  const data = useAppSelector((state) => state.currency.data);
+  const dispatch = useAppDispatch();
 
   const copyLinkToClipboard = async () => {
     if (webUrl.length > 0) {
@@ -38,9 +40,6 @@ const PaymentRequestScreen = () => {
   };
 
   //web socket connection
-  const data = useAppSelector((state) => state.currency.data);
-  const dispatch = useAppDispatch();
-
   useEffect(() => {
     //if post create_orders return data values for socket connection
     if (data) {
@@ -53,20 +52,18 @@ const PaymentRequestScreen = () => {
       };
 
       socket.onmessage = (event) => {
-        const data = event.data;
+        const jsonData = JSON.parse(event.data);
         console.log("Mensaje recibido:", data);
 
         //if is data is not null try set the web_url value
-        if (data) {
+        if (data?.web_url) {
           dispatch(setWebUrl(data?.web_url));
         }
 
-        /**
-         *
-         * Aquí iría el código de redirección a la ventana PaymentSuccessScreen
-         * una vez data contenga el msg de éxito
-         *
-         */
+        //verify status payment for redirect to success
+        if (jsonData?.status === "CA") {
+          navigation.navigate("PaymentSuccessScreen", {});
+        }
       };
 
       socket.onerror = (error) => {
@@ -77,7 +74,7 @@ const PaymentRequestScreen = () => {
         console.log("Conexión cerrada:", event.reason);
       };
     }
-  }, []);
+  }, [data]);
 
   return (
     <SafeAreaView style={styles.container}>

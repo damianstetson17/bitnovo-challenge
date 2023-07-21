@@ -8,20 +8,20 @@ import {
 interface CurrencyItem {
   id: number;
   flag: string;
-  abb: string;
+  abb: "EUR" | "USD" | "GBP";
   name: string;
   symbol: string;
 }
 
 interface CurrencyState {
   currencyMount: number;
-  currencyAbb: string;
+  currencyAbb: "EUR" | "USD" | "GBP";
   currencySymbol: string;
   currencyList: CurrencyItem[];
   isBottomSheetOpen: boolean;
   loading: "idle" | "pending" | "fulfilled" | "rejected";
   data: ResponseData | null;
-  webUrl: string,
+  webUrl: string;
   error: string | null;
 }
 
@@ -32,12 +32,18 @@ const initialState: CurrencyState = {
   isBottomSheetOpen: false,
   loading: "idle",
   data: null,
-  webUrl: '',
+  webUrl: "",
   error: null,
   currencyList: [
     { id: 1, flag: "🇪🇺", abb: "EUR", name: "Euro", symbol: "€" },
     { id: 2, flag: "🇬🇧", abb: "GBP", name: "Libra Esterlina", symbol: "£" },
-    { id: 3, flag: "🇺🇸", abb: "US", name: "Dolar Estadounidense", symbol: "$" },
+    {
+      id: 3,
+      flag: "🇺🇸",
+      abb: "USD",
+      name: "Dolar Estadounidense",
+      symbol: "$",
+    },
   ],
 };
 
@@ -67,7 +73,7 @@ export const currencySlice = createSlice({
     //update fiat data
     setFiatData: (
       state,
-      action: PayloadAction<{ abb: string; symbol: string }>
+      action: PayloadAction<{ abb: "EUR" | "USD" | "GBP"; symbol: string }>
     ) => {
       state.currencyAbb = action.payload.abb;
       state.currencySymbol = action.payload.symbol;
@@ -92,6 +98,7 @@ export const currencySlice = createSlice({
         (state, action: PayloadAction<ResponseData | null>) => {
           state.loading = "fulfilled";
           state.data = action.payload;
+          state.webUrl = action.payload?.web_url ? action.payload?.web_url : "";
           state.error = null;
         }
       )

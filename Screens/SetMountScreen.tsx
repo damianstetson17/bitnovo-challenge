@@ -4,21 +4,21 @@ import { GlobalStyles } from "../styles/GlobalStyles";
 import RNScreenKeyboard from "rnscreenkeyboard";
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation, NavigationProp } from "@react-navigation/native";
-import CustomButton from "../Components/Buttons/CustomButton";
+import CustomButton from "../components/Buttons/CustomButton";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { AntDesign } from "@expo/vector-icons";
 import {
   BottomSheetModal,
   BottomSheetModalProvider,
 } from "@gorhom/bottom-sheet";
-import CurrencyList from "../Components/Lists/CurrencyList";
+import CurrencyList from "../components/Lists/CurrencyList";
 import { useAppDispatch, useAppSelector } from "../store/store";
 import {
   createOrder,
   setBottonSheetOpen,
   setMount,
 } from "../store/slices/currencySlice";
-import { formatNumberWithCommas } from "../Components/utils/formatNumberWithCommas";
+import { formatNumberWithCommas } from "../components/utils/formatNumberWithCommas";
 import { PostData } from "../services/OrderServices";
 
 const SetMountScreen = () => {

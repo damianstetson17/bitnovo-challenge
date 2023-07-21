@@ -2,10 +2,10 @@ import { StyleSheet, Text, View, ToastAndroid } from "react-native";
 import React, { useEffect, useState } from "react";
 import { GlobalStyles } from "../styles/GlobalStyles";
 import { Ionicons } from "@expo/vector-icons";
-import PrintButton from "../Components/Buttons/PrintButton";
+import PrintButton from "../components/Buttons/PrintButton";
 import QRCode from "react-native-qrcode-svg";
 import { useAppSelector } from "../store/store";
-import { formatNumberWithCommas } from "../Components/utils/formatNumberWithCommas";
+import { formatNumberWithCommas } from "../components/utils/formatNumberWithCommas";
 
 const QRScreen = () => {
   const mount = useAppSelector((state) => state.currency.currencyMount);

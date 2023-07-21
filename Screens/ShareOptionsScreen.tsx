@@ -8,10 +8,10 @@ import {
 } from "react-native";
 import React from "react";
 import { GlobalStyles } from "../styles/GlobalStyles";
-import ShareButton from "../Components/Sharing/ShareButton";
+import ShareButton from "../components/Sharing/ShareButton";
 import * as Clipboard from "expo-clipboard";
-import ShareWhatsAppMessage from "../Components/Sharing/ShareWhatsAppMessage";
-import ShareEmail from "../Components/Sharing/ShareEmail";
+import ShareWhatsAppMessage from "../components/Sharing/ShareWhatsAppMessage";
+import ShareEmail from "../components/Sharing/ShareEmail";
 import { useAppSelector } from "../store/store";
 
 const ShareOptionsScreen = () => {

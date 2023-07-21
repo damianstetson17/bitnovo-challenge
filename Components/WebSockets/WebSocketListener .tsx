@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../store/store";
 import { NavigationProp, useNavigation } from "@react-navigation/native";
 import { resetData, setWebUrl } from "../../store/slices/currencySlice";
+import { apiConfig } from "../../config/apiConfig";
 
 const WebSocketListener = () => {
   const navigation = useNavigation<NavigationProp<any>>();
@@ -11,7 +12,7 @@ const WebSocketListener = () => {
   useEffect(() => {
     //if post create_orders return data values for socket connection
     if (data) {
-      const url = "wss://payments.smsdata.com/ws/merchant/" + data?.identifier;
+      const url = apiConfig.ws + data?.identifier;
       const socket = new WebSocket(url);
 
       //webSocket listeners
@@ -37,13 +38,13 @@ const WebSocketListener = () => {
       socket.onerror = (error) => {
         console.error("Error en la conexión:", error);
         dispatch(resetData());
-        dispatch(setWebUrl(''));
+        dispatch(setWebUrl(""));
       };
 
       socket.onclose = (event) => {
         console.log("Conexión cerrada:", event.reason);
         dispatch(resetData());
-        dispatch(setWebUrl(''));
+        dispatch(setWebUrl(""));
       };
     }
   }, [data]);

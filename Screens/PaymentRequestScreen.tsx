@@ -9,12 +9,12 @@ import {
 } from "react-native";
 import React from "react";
 import { GlobalStyles } from "../styles/GlobalStyles";
-import ShareButton from "../Components/Sharing/ShareButton";
+import ShareButton from "../components/Sharing/ShareButton";
 import * as Clipboard from "expo-clipboard";
-import CustomButton from "../Components/Buttons/CustomButton";
+import CustomButton from "../components/Buttons/CustomButton";
 import { useNavigation, NavigationProp } from "@react-navigation/native";
 import { useAppSelector } from "../store/store";
-import { formatNumberWithCommas } from "../Components/utils/formatNumberWithCommas";
+import { formatNumberWithCommas } from "../components/utils/formatNumberWithCommas";
 
 const PaymentRequestScreen = () => {
   const navigation = useNavigation<NavigationProp<any>>();

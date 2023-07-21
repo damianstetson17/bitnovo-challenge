@@ -3,14 +3,14 @@ import { Image } from "react-native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { NavigationContainer } from "@react-navigation/native";
 import SetMountScreen from "../screens/SetMountScreen";
-import CurrencyButton from "../Components/Buttons/CurrencyButton";
-import CustomBackButton from "../Components/Buttons/CustomBackButton";
+import CurrencyButton from "../components/Buttons/CurrencyButton";
+import CustomBackButton from "../components/Buttons/CustomBackButton";
 import ShareOptionsScreen from "../screens/ShareOptionsScreen";
 import PaymentSuccessScreen from "../screens/PaymentSuccessScreen";
 import PaymentRequestScreen from "../screens/PaymentRequestScreen";
 import QRScreen from "../screens/QRScreen";
 import { GlobalStyles } from "../styles/GlobalStyles";
-import WebSocketListener from "../Components/WebSockets/WebSocketListener ";
+import WebSocketListener from "../components/WebSockets/WebSocketListener ";
 
 export default function StackNavigator() {
   const Stack = createNativeStackNavigator();
